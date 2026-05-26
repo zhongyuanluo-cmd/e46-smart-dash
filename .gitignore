@@ -1,0 +1,56 @@
+# Build outputs
+build/
+dist/
+out/
+*.o
+*.ko
+*.obj
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+
+# IDE
+.vscode/settings.json
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS
+Desktop.ini
+
+# Python virtualenv
+venv/
+.venv/
+Scripts/
+Lib/
+lib/
+
+# Test outputs
+coverage/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+zai-debug.log
+
+# Compiled binaries
+*.exe
+*.dll
+*.so
+*.a
+
+# KiCad
+*.bak
+*.bck
+*-backups/
+*.kicad_pcb-bak
+*.kicad_sch-bak
+fp-info-cache
