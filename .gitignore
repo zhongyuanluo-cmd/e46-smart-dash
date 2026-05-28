@@ -25,6 +25,20 @@ Thumbs.db
 # OS
 Desktop.ini
 
+# CMake
+cmake-build-*/
+
+# Qt
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+*.qm
+
+# Project specific
+*.log
+core
+.cache/
+
 # Python virtualenv
 venv/
 .venv/
