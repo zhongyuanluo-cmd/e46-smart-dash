@@ -85,3 +85,4 @@ dtoverlay=dwc2,dr_mode=host
 - 原理图 V4: `CM4-IO-BASE-B_V4_SchDoc.pdf`
 - CM4 核心板数据手册: `cm4-datasheet.pdf`
 - 3D 文件: `CM4-IO-BASE-3D.zip`
+- 40pin定义: https://pinout.xyz/

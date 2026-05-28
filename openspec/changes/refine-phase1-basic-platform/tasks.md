@@ -1,24 +1,24 @@
 ## 1. Armbian 烧录与系统初始配置
 
-- [ ] 1.1 从 Luckfox Wiki 下载 Core3566 Armbian 镜像，用 balenaEtcher 烧录到 32GB SD 卡
-- [ ] 1.2 插入 SD 卡到 Core3566，连接 CH343 USB-UART 到开发机，PuTTY 打开 1500000-8-N-1 串口
-- [ ] 1.3 上电启动，确认 U-Boot SPL → U-Boot → Kernel → rootfs 启动流程完整，到达 login 提示符
-- [ ] 1.4 运行 `armbian-config` 配置 WiFi（AP6256, 2.4G/5G）和 locale（en_US.UTF-8 + zh_CN.UTF-8）
-- [ ] 1.5 `apt update && apt upgrade` 更新所有包到最新
-- [ ] 1.6 安装开发必备包：`build-essential cmake git vim i2c-tools spi-tools can-utils pkg-config`
-- [ ] 1.7 确认内核版本和关键驱动：`zcat /proc/config.gz | grep -E "PANFROST|ROCKCHIP|MIPI_DSI|GPIO_SYSFS|SPI_SPIDEV|I2C_CHARDEV"`
-- [ ] 1.8 记录 `docs/devlog/01-armbian-bringup.md` 中遇到的任何问题及 workaround
+- [x] 1.1 从 Luckfox Wiki 下载 Core3566 Armbian 镜像，用 RKDevTool 烧录到 eMMC
+- [x] 1.2 插入 SD 卡到 Core3566，连接 CH343 USB-UART 到开发机，PuTTY 打开 1500000-8-N-1 串口
+- [x] 1.3 上电启动，确认 U-Boot SPL → U-Boot → Kernel → rootfs 启动流程完整，到达 login 提示符
+- [ ] 1.4 运行 `armbian-config` 配置 WiFi（AP6256, 2.4G/5G）和 locale（en_US.UTF-8 + zh_CN.UTF-8）⚠️ WiFi 驱动故障，暂跳过
+- [ ] 1.5 `apt update && apt upgrade` 更新所有包到最新 ⚠️ 无网络
+- [ ] 1.6 安装开发必备包：`build-essential cmake git vim i2c-tools spi-tools can-utils pkg-config` ⚠️ 无网络
+- [x] 1.7 确认内核版本和关键驱动：`zcat /proc/config.gz | grep -E "PANFROST|ROCKCHIP|MIPI_DSI|GPIO_SYSFS|SPI_SPIDEV|I2C_CHARDEV"`
+- [x] 1.8 记录 `docs/devlog/01-armbian-bringup.md` 中遇到的任何问题及 workaround
 
 ## 2. MIPI DSI 屏幕点亮
 
-- [ ] 2.1 将 Waveshare 7" DSI LCD FPC 排线连接到 CM4-IO-BASE-B DSI1 接口，确认方向正确
-- [ ] 2.2 检查 `/boot/armbianEnv.txt` 或设备树 overlay 目录是否有 Waveshare 7" DSI 的 overlay
-- [ ] 2.3 若官方提供 overlay，在 `/boot/armbianEnv.txt` 中启用；若否，手写 DTS overlay（参考 https://github.com/waveshare/7inch-DSI-LCD 和 Luckfox DTS 模板）
-- [ ] 2.4 编译并部署 DTS overlay：`dtc -@ -I dts -O dtb -o /boot/overlays/xxx.dtbo xxx.dts`
-- [ ] 2.5 重启，确认 DRM connector 出现：`ls /sys/class/drm/` 含 `card*-DSI-*`，`modetest -M rockchip` 列出 DSI connector
-- [ ] 2.6 确认 framebuffer console 在屏幕上显示 boot log 和 login 提示符
+- [x] 2.1 将 Waveshare 7" DSI LCD FPC 排线连接到 CM4-IO-BASE-B DSI1 接口，确认方向正确
+- [x] 2.2 检查设备树 overlay 是否生效——DSI1 镜像已预配 `card0-DSI-1`
+- [x] 2.3 DSI1 镜像已预配 overlay，无需手动配置
+- [x] 2.4 DSI1 镜像已内置 dtbo，无需手动编译
+- [x] 2.5 重启，确认 DRM connector 出现：`ls /sys/class/drm/` 含 `card0-DSI-1`，status=connected
+- [x] 2.6 确认 framebuffer console 在屏幕上显示 boot log 和 login 提示符
 - [ ] 2.7 运行 `modetest -M rockchip -s <connector_id>@<crtc_id>:800x480@RG16` 做 mode setting 测试
-- [ ] 2.8 记录 `docs/devlog/02-dsi-display.md` 中 panel init sequence、timing 参数和遇到的问题
+- [x] 2.8 记录 `docs/devlog/02-dsi-display.md` 中 panel init sequence、timing 参数和遇到的问题
 
 ## 3. Qt 6 交叉编译工具链搭建
 

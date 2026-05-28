@@ -5,30 +5,30 @@
 
 ## 1. GPIO
 
-| Pin | GPIO# | Output Test | Input Test | Notes |
-|------|:---:|:---:|:---:|------|
-| 3 | ❓ | ❌ | ❌ | |
-| 5 | ❓ | ❌ | ❌ | |
-| 7 | ❓ | ❌ | ❌ | |
+- GPIO sysfs enabled (CONFIG_GPIO_SYSFS=y)
+- Pin numbers need verification with logic analyzer (Phase 2+)
 
 ## 2. UART
 
-| Device | TX Pin | RX Pin | Loopback @115200 | Loopback @1500000 | Notes |
-|------|:---:|:---:|:---:|:---:|------|
-| ttyS2 | ❓ | ❓ | ❌ | ❌ | |
+| Device | TX Pin | RX Pin | Loopback Test | Notes |
+|------|:---:|:---:|:---:|------|
+| ttyS1 | ❓ | ❓ | ❌ | Only UART exposed, console on ttyFIQ0 |
 
 ## 3. SPI
 
-| Device | MOSI | MISO | SCLK | CS | Loopback Test | Notes |
-|------|:---:|:---:|:---:|:---:|:---:|------|
-| spidev0.0 | 19 | 21 | 23 | 24 | ❌ | |
+| Device | Status | Notes |
+|------|:---:|------|
+| spidev0.0 | ❌ 未启用 | 需要设备树 overlay；内核模块缺失（lite镜像） |
 
-## 4. I2C
+## 4. I2C ✅
 
-| Bus | SDA | SCL | Pull-ups Present | Scan Result | Notes |
-|:---:|:---:|:---:|:---:|------|------|
-| i2c-0 | 27 | 28 | ❓ | ❓ | |
+| Bus | Scan Result | Notes |
+|:---:|------|------|
+| i2c-0 | 空 (all --) | 正常，无外设 |
+| i2c-1 | 0x0c, **0x2f**(EMC2301风扇), 0x45, **0x51**(RTC) | ✅ |
+| i2c-3 | 空 (all --) | 触摸屏待 Phase 6 |
 
-## 5. Issues & Workarounds
+## 5. Issues
 
-1. [No issues yet]
+1. **SPI 无法验证**: 内核模块未包含在 lite 镜像中，需要 `apt install` 或手动编译设备树
+2. **UART 有限**: 只有 `/dev/ttyS1` 可用，回环测试需 GPIO 引脚映射确认后的 Phase 2

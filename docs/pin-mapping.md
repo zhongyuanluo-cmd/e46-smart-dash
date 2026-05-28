@@ -15,40 +15,20 @@ PIN39 GND   ←  [39][40]  →  GPIO21         PIN40
                     └──────────────────────┘
 ```
 
-## Verified Pin Assignments
+## Verified Pin Assignments — Phase 1
 
-> ⚠️ Fill in after physical verification with multimeter/logic analyzer.
+> ✅ 来源：Luckfox Core3566 官方文档 https://wiki.luckfox.com/Core3566/#52-串口登录
 
-| Header Pin | Function | RK3566 GPIO | Device | Verified |
-|:---:|------|:---:|------|:---:|
-| 3 | GPIO | ❓ | - | ❌ |
-| 5 | GPIO | ❓ | - | ❌ |
-| 7 | GPIO | ❓ | - | ❌ |
-| 8 | UART_TX | ❓ | ❓ | ❌ |
-| 10 | UART_RX | ❓ | ❓ | ❌ |
-| 11 | GPIO | ❓ | - | ❌ |
-| 12 | GPIO | ❓ | - | ❌ |
-| 13 | GPIO | ❓ | - | ❌ |
-| 15 | GPIO | ❓ | - | ❌ |
-| 16 | GPIO | ❓ | - | ❌ |
-| 18 | GPIO | ❓ | - | ❌ |
-| 19 | SPI_MOSI | ❓ | SPI0 | ❌ |
-| 21 | SPI_MISO | ❓ | SPI0 | ❌ |
-| 22 | GPIO | ❓ | - | ❌ |
-| 23 | SPI_CLK | ❓ | SPI0 | ❌ |
-| 24 | SPI_CE0 | ❓ | SPI0 | ❌ |
-| 26 | SPI_CE1 | ❓ | SPI0 | ❌ |
-| 27 | I2C_SDA | ❓ | I2C0 | ❌ |
-| 28 | I2C_SCL | ❓ | I2C0 | ❌ |
-| 29 | GPIO | ❓ | - | ❌ |
-| 31 | GPIO | ❓ | - | ❌ |
-| 32 | GPIO | ❓ | - | ❌ |
-| 33 | GPIO | ❓ | - | ❌ |
-| 35 | GPIO | ❓ | - | ❌ |
-| 36 | GPIO | ❓ | - | ❌ |
-| 37 | GPIO | ❓ | - | ❌ |
-| 38 | GPIO | ❓ | - | ❌ |
-| 40 | GPIO | ❓ | - | ❌ |
+| Header Pin | Function | Connected To | Verified |
+|:---:|------|------|:---:|
+| PIN 4 | 5V | 7" DSI LCD 红色电源线 | ✅ |
+| PIN 6 | GND | 7" DSI LCD 黑色电源线 | ✅ |
+| PIN 8 | UART2_TX (GPIO14) | CH343 RXD（交叉） | ✅ |
+| PIN 10 | UART2_RX (GPIO15) | CH343 TXD（交叉） | ✅ |
+| PIN 14 | GND | CH343 GND | ✅ |
+
+> 📝 PIN1 识别：底板 40PIN 排针旁有丝印标号，PIN1 附近有▼三角或白点标记。
+> 方向：RJ45/USB 朝下，40PIN 在右侧，PIN1 在上方（靠近 Core3566 模块）。
 
 ## SPI0 Pin Mapping (for MCP2515 CAN controller - Phase 2)
 
