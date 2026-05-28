@@ -55,7 +55,7 @@
 - [ ] 5.6 人工测量 Qt eglfs 首帧时间：启动秒表，运行 Qt eglfs test app，记录从回车到屏幕出画面的秒数
 - [x] 5.7 将上述数据填入 `docs/devlog/boot-baseline.md`
 - [x] 5.8 设定 Buildroot 冷启动目标：U-Boot ≤ 1.5s / Kernel ≤ 2.5s / Userspace+UI ≤ 4s / Total ≤ 8s
-- [ ] 5.9 列出当前 Armbian 镜像中可以在 Buildroot 裁掉的服务/驱动清单（初步裁剪建议）
+- [x] 5.9 列出当前 Armbian 镜像中可以在 Buildroot 裁掉的服务/驱动清单（初步裁剪建议）
 
 ## 6. 项目仓库骨架搭建
 
@@ -66,4 +66,4 @@
 - [x] 6.5 在顶层 CMake 中添加 `add_subdirectory` 引用各 daemon（Phase 1 只有 ui-app 有实际代码）
 - [x] 6.6 创建 `config/dts/` 和 `config/systemd/` 目录
 - [x] 6.7 创建 `.gitignore`（排除 build/、.vscode/ 除外、*.o、.DS_Store）
-- [ ] 6.8 `git init && git add -A && git commit -m "init: project skeleton with CMake build system"`
+- [x] 6.8 `git init && git add -A && git commit -m "init: project skeleton with CMake build system"`
