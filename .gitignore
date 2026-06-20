@@ -78,3 +78,4 @@ zai-debug.log
 *.kicad_pcb-bak
 *.kicad_sch-bak
 fp-info-cache
+requirements.txt
