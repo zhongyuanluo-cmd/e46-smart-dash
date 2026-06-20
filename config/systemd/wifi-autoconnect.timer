@@ -1,0 +1,10 @@
+[Unit]
+Description=Start WiFi auto-connect 10s after boot (non-blocking)
+
+[Timer]
+# Start 10 seconds after boot completes — doesn't block graphical.target
+OnBootSec=10s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target

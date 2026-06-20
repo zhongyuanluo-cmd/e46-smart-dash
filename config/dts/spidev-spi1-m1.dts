@@ -1,0 +1,30 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "rockchip,rk3566";
+
+	fragment@0 {
+		target = <0xffffffff>;
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <0xffffffff>;
+			cs-gpios = <0xffffffff 0x00000004 0x00000001>;
+			#address-cells = <0x00000001>;
+			#size-cells = <0x00000000>;
+
+			spidev@0 {
+				compatible = "rockchip,spidev";
+				reg = <0>;
+				spi-max-frequency = <10000000>;
+			};
+		};
+	};
+
+	__fixups__ {
+		spi1 = "/fragment@0:target:0";
+		spi1m1_pins = "/fragment@0/__overlay__:pinctrl-0:0";
+		gpio3 = "/fragment@0/__overlay__:cs-gpios:0";
+	};
+};

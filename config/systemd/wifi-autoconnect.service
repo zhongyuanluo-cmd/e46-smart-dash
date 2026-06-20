@@ -1,0 +1,13 @@
+[Unit]
+Description=Auto-connect WiFi (on-demand, non-blocking)
+After=wpa_supplicant.service
+Wants=wpa_supplicant.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/wifi-connect.sh
+
+[Install]
+# Not auto-started at boot — triggered by wifi-autoconnect.timer instead
+WantedBy=

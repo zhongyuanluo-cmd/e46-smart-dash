@@ -1,0 +1,54 @@
+// Fixed SPI1 M1 overlay with high_speed pinctrl state
+//
+// ROOT CAUSE: The Rockchip SPI driver switches to "high_speed" pinctrl state
+// during actual data transfer for better signal integrity. The base DTB's
+// pinctrl-1 for spi1 contains M0 pin groups (spi1m0-pins from spi1-hs),
+// which map to GPIO2_B5/B6/B7 — physically different pins than M1 (Pin 19/21/23).
+// The original spidev-spi1-m1 overlay only set pinctrl-0 ("default") to M1 pins,
+// leaving pinctrl-1 with the base DTB's M0 pins.
+//
+// FIX: Override both pinctrl-0 and pinctrl-1 with M1 pin groups:
+//   pinctrl-0 = spi1m1_pins    (from /pinctrl/spi1/ — normal speed)
+//   pinctrl-1 = spi1m1_pins_hs (from /pinctrl/spi1-hs/ — high speed)
+//
+// DT symbols used:
+//   spi1          = /spi1@fe620000
+//   spi1m1_pins   = /pinctrl/spi1/spi1m1-pins (phandle 0x025c)
+//   spi1m1_pins_hs = /pinctrl/spi1-hs/spi1m1-pins (phandle 0x028b)
+//   gpio3         = /gpio3@fe620000
+//
+// Physical pins on 40-pin header:
+//   MOSI  = Pin 19 (GPIO3_C1, spi1m1_mosi)
+//   MISO  = Pin 21 (GPIO3_C2, spi1m1_miso)
+//   SCLK  = Pin 23 (GPIO3_C3, spi1m1_clk)
+//   CS0   = Pin 24 (GPIO3_A4, active-low)
+//
+// Loopback test: Jumper Pin 19 ↔ Pin 21 (MOSI ↔ MISO)
+// WARNING: Pin 9 is GND, NOT an SPI data pin!
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "rockchip,rk3566";
+
+	fragment@0 {
+		target = <&spi1>;
+
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default", "high_speed";
+			pinctrl-0 = <&spi1m1_pins>;
+			pinctrl-1 = <&spi1m1_pins_hs>;
+			cs-gpios = <&gpio3 4 1>;  /* GPIO3_A4, Pin24/GPIO8 */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			spidev@0 {
+				compatible = "rockchip,spidev";
+				reg = <0>;
+				spi-max-frequency = <10000000>;
+			};
+		};
+	};
+};

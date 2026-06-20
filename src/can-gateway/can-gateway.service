@@ -1,0 +1,26 @@
+[Unit]
+Description=E46 CAN Gateway Daemon
+Documentation=https://github.com/e46-smart-dash
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/e46-can-gateway
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=e46-cangw
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/log /tmp
+ReadOnlyPaths=/etc/e46
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

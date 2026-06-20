@@ -1,0 +1,23 @@
+{
+    "can": {
+        "interface": "can0",
+        "bitrate": 500000
+    },
+    "kbus": {
+        "uart": "/dev/ttyS4",
+        "baud": 9600
+    },
+    "adc": {
+        "i2c_bus": 1,
+        "i2c_addr": 72,
+        "interval_sec": 1
+    },
+    "dbus": {
+        "bus": "session",
+        "service": "com.e46.can1"
+    },
+    "logging": {
+        "level": "INFO",
+        "file": "/var/log/e46-cangw.log"
+    }
+}

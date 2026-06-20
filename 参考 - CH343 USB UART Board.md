@@ -60,7 +60,9 @@ minicom -D /dev/ttyACM0
 Core3566 调试串口（UART2），用于：
 - 查看 U-Boot / Kernel 启动日志
 - 访问串口终端
-- 115200 8N1
+- 1500000 8N1
+
+> Rockchip 调试串口默认使用 1.5M 波特率，不是常见的 115200。
 
 接线：
 ```

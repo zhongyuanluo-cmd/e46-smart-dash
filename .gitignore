@@ -27,6 +27,7 @@ Desktop.ini
 
 # CMake
 cmake-build-*/
+build-cross/
 
 # Qt
 moc_*.cpp
@@ -38,6 +39,12 @@ ui_*.h
 *.log
 core
 .cache/
+
+# Temp files
+.temp_*
+
+# Output
+output/
 
 # Python virtualenv
 venv/

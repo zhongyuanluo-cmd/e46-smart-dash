@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "logic2": {
+      "type": "http",
+      "url": "http://127.0.0.1:10530"
+    },
+    "notify": {
+      "type": "stdio",
+      "command": "d:\\My Trunk\\车机助手\\.venv-1\\Scripts\\python.exe",
+      "args": ["d:\\My Trunk\\车机助手\\mcp-servers\\notify\\server.py"],
+      "env": {
+        "SERVERCHAN_SENDKEY": "SCT357492TfAEfI6512PqnX5KoBKxikCzY"
+      }
+    }
+  }
+}

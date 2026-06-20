@@ -1,0 +1,73 @@
+// MCP2515 single CAN DT overlay for Core3566 (RK3566) on SPI1 M1 pins
+//
+// Based on spidev-spi1-m1-hs.dts (Phase 1 verified)
+// Differences from old mcp2515_two_can.dtbo:
+//   - Single CAN (can@0 only, not dual)
+//   - vdd-supply via regulator-fixed (fixes driver probe)
+//   - pinctrl-1 = &spi1m1_pins_hs (high_speed state fix)
+//   - clock-frequency = 8000000 (8MHz crystal, user confirmed)
+//
+// Physical pins on 40-pin header:
+//   MOSI  = Pin 19 (GPIO3_C1, spi1m1_mosi)
+//   MISO  = Pin 21 (GPIO3_C2, spi1m1_miso)
+//   SCLK  = Pin 23 (GPIO3_C3, spi1m1_clk)
+//   CS    = Pin 24 (GPIO3_A4, software cs-gpios)
+//   INT   = Pin 16 (GPIO3_A1, falling edge interrupt)
+//
+// DT symbols used:
+//   spi1           = /spi1@fe620000
+//   spi1m1_pins    = /pinctrl/spi1/spi1m1-pins
+//   spi1m1_pins_hs = /pinctrl/spi1-hs/spi1m1-pins
+//   gpio3          = /gpio3@fe620000
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "rockchip,rk3566";
+
+	fragment@0 {
+		target = <&spi1>;
+
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default", "high_speed";
+			pinctrl-0 = <&spi1m1_pins>;
+			pinctrl-1 = <&spi1m1_pins_hs>;
+			cs-gpios = <&gpio3 4 1>;  /* GPIO3_A4, Pin24/GPIO8, ACTIVE_LOW */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			can@0 {
+				compatible = "microchip,mcp2515";
+				reg = <0>;
+				clocks = <&mcp251x_clk>;
+				clock-frequency = <8000000>;  /* 8MHz crystal on module */
+				interrupt-parent = <&gpio3>;
+				interrupts = <1 2>;  /* GPIO3_A1, IRQ_TYPE_EDGE_FALLING */
+				spi-max-frequency = <4000000>;
+				spi-cpol;
+				spi-cpha;
+				vdd-supply = <&mcp2515_vdd>;
+			};
+		};
+	};
+
+	fragment@1 {
+		target-path = "/";
+
+		__overlay__ {
+			mcp2515_vdd: regulator-mcp2515-vdd {
+				compatible = "regulator-fixed";
+				regulator-name = "mcp2515_vdd";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			};
+		};
+	};
+
+	__symbols__ {
+		mcp2515_can0 = "/fragment@0/__overlay__/can@0";
+	};
+};
