@@ -46,6 +46,9 @@ core
 # Output
 output/
 
+# PDF parsed artifacts
+mfi_parsed/
+
 # Python virtualenv
 venv/
 .venv/
